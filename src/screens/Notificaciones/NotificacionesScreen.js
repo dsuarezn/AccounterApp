@@ -1,33 +1,45 @@
 import React, { Component } from 'react';
-import AccounterLabel from '../../components/UI/AccounterLabel/AccounterLabel';
-import { Navigation } from 'react-native-navigation';
+import {ScrollView,StyleSheet} from 'react-native';
+import NovedadesList from '../../components/UI/NovedadesList/NovedadesList';
+import { connect } from 'react-redux';
 
+import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
 
-class NotificacionesScreen extends Component{
-
+class NotificacionesScreen extends CommonScreenComponent{
     
     constructor(props){
         super(props);
-        Navigation.events().bindComponent(this);
+        
     }
 
-    navigationButtonPressed({ buttonId }) {
-        console.log(buttonId+" pressed");
-    }
 
     render(){
-
         return(
-            <AccounterLabel>
-                Hola esta es la pagina de notificaciones  
-            </AccounterLabel>
-
+            <ScrollView>
+                <NovedadesList  dataArray={this.props.notificaciones}></NovedadesList>                              
+            </ScrollView>
         );
-
     }
-
-
-
 } 
 
-export default NotificacionesScreen;
+
+const styles=StyleSheet.create({
+    scrollContainer:{
+        height:200
+    }
+});
+
+
+const mapStateToProps =(state)=>{
+    return {
+        notificaciones:state.notificaciones.notificaciones               
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return {
+        
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(NotificacionesScreen);

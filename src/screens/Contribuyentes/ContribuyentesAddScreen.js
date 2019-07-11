@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
-import AccounterUserCard from '../../components/UI/AccounterUserCard/AccounterUserCard';
-import AccounterLabel from '../../components/UI/AccounterLabel/AccounterLabel';
 import AccounterInput from '../../components/UI/AccounterInput/AccounterInput';
-import VencimientoContribSectionList from '../../components/UI/VencimientoContribSectionList/VencimientoContribSectionList';
 import {iconsMap} from '../../components/UI/Icons/AppIcons';
-import Icon from "react-native-vector-icons/FontAwesome5";
+import {AppImages} from '../../components/UI/Images/AppImages';
 import { Navigation } from 'react-native-navigation';
-import {View, Text, StyleSheet, ScrollView, Switch, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, } from 'react-native';
+import { CheckBox, Button, Divider } from 'react-native-elements';
+import { connect } from 'react-redux';
+import AccounterButton from '../../components/UI/AccounterButton/AccounterButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Button } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
+import { CONTRIBUYENTES_ADD_SCREEN, CONTRIBUYENTES_ADD_DETAIL_SCREEN } from '../../navigation/Screens';
+import { setClientData } from '../../store/actions/actions';
+
+import {seleccionarVencimientos, bindComponentNavigation} from '../../navigation/Navigation';
+import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
 
 
-const vencimientos = [
-    { key:"01", title: "Enero 2019", data: [{itemDesc:"Seguridad Social", value:"11"}, {itemDesc:"Retención en la fuente", value:"24"}, {itemDesc:"Iva Bimestral", value:"24"}] },
-    { key:"02", title: "Febrero 2019",  data: [{itemDesc:"Retención en la fuente", value:"11"}] },
-    { key:"03", title: "Marzo 2019", data: [{itemDesc:"Seguridad Social", value:"11"},{itemDesc:"Retención en la fuente", value:"21"},{itemDesc:"Autoretención", value:"21"}] },    
-  ];
-
-class ContribuyentesAddScreen extends Component{
-    
-    state = {switchValue:false}
+class ContribuyentesAddScreen extends CommonScreenComponent{
+    state = {        
+        razonSocial:null,
+        ciudad:null,
+        nit:null,
+        granContribuyente:null
+    };
 
     constructor(props){
-        super(props);   
-        Navigation.events().bindComponent(this);     
+        super(props);           
     }
     
     navigationButtonPressed({ buttonId }) {
@@ -34,8 +35,22 @@ class ContribuyentesAddScreen extends Component{
     }
 
     guardarInformacionHandler = () => {
-        Navigation.dismissModal(this.props.componentId);
+        var client={
+            razonSocial:this.state.razonSocial,
+            ciudad:this.state.ciudad,
+            nit:this.state.nit,
+            granContribuyente:this.state.granContribuyente,
+            clientType:this.props.tipoCliente
+        };
+        this.props.setTempContribData(client);
+        seleccionarVencimientos();        
     }
+
+    
+  
+
+    
+
 
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
@@ -44,67 +59,207 @@ class ContribuyentesAddScreen extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <AccounterLabel>Información General</AccounterLabel>
-                <AccounterInput style={styles.inputTextStyle} placeholder="Nombre o razón social"/> 
-                <AccounterInput style={styles.inputTextStyle} placeholder="Cédula o NIT sin digito de verificación"/>
-                <AccounterInput style={styles.inputTextStyle} placeholder="Télefono Movil"/>
-                <AccounterInput style={styles.inputTextStyle} placeholder="Ciudad"/> 
-                <AccounterLabel style={styles.accounterLabelStyle}>Tipo de contribuyente</AccounterLabel>
-                <View style={styles.buttonContainer}>
-                    <Button icon={<Icon name="user-tie" size={15} color="#4388D6" /> } title="  Persona Natural" type="outline" /> 
-                    <Button icon={<Icon name="building" size={15} color="#4388D6" /> } title="  Persona Juridica" type="outline" />
-                </View>
-                <View style={styles.switchContainer}>
-                    <Switch  style={styles.switchStyle} onValueChange = {this.toggleSwitch} value = {this.state.switchValue}/>
-                    <Text style={styles.inputTextStyle}>Gran Contribuyente</Text>
-                </View>
+                <View style={styles.contentContainer}>
+                    <View style={styles.titleContainerStyle}>
+                        <Text style={styles.titleStyle}>Agregar Cliente</Text>
+                        {
+                            this.props.tipoCliente==='Natural'
+                            ?
+                            <View style={styles.subtitleContainer}>
+                                <Icon name="account-circle" size={25} color="#6F7F89" />
+                                <Text style={styles.subTitleStyle}>{'  '}Persona Natural</Text>
+                            </View>
+                            :
+                            <View style={styles.subtitleContainer}>
+                                <Icon name="work" size={25} color="#6F7F89" />
+                                <Text style={styles.subTitleStyle}>{'  '}Persona Jurídica</Text>
+                            </View>
+                        }
+                    </View>
+                    <View style={{marginTop:15, height: 1, width: "85%", backgroundColor: "#CED0CE"}} />
+                    <View style={styles.componentContainer}>
+                        
+                        <AccounterInput placeholder="Razón social" value={this.state.razonSocial} onChangeText={(value) => this.setState({razonSocial:value})}/>
+                        <AccounterInput placeholder="NIT sin digito de verificación" value={this.state.nit} onChangeText={(value) => this.setState({nit:value})}/>
+                        <AccounterInput placeholder="Ciudad" value={this.state.ciudad} onChangeText={(value) => this.setState({ciudad:value})}/> 
+                            <View style={styles.checkContainer}>  
+                                <View style={styles.checkInnerContainer}>
+                                    <CheckBox
+                                        left
+                                        title='Gran contribuyente'
+                                        textStyle={styles.rememberText}
+                                        containerStyle={styles.checkContainerStyle}
+                                        checked={this.state.granContribuyente}                            
+                                        iconRight   
+                                        iconType='material'                                     
+                                        checkedIcon='check-box'
+                                        uncheckedIcon='check-box-outline-blank'
+                                        checkedColor='#4DA72C'
+                                        onPress={() => this.setState({granContribuyente: !this.state.granContribuyente})}
+                                        />  
+                                </View>
+                            </View>
+                            <View style={styles.checkContainer}>  
+                                <View style={styles.checkInnerContainer}>
+                                    <AccounterButton  onPress={this.guardarInformacionHandler}>Crear</AccounterButton>
+                                </View>
+                            </View>
+                        {/* <View style={{marginLeft:5, marginTop:30, height: "90%", width: 1, backgroundColor: "#AFAFAF"}}/>
+                        <View style={{marginRight:5, height: "90%", width: 1, backgroundColor: "#FFFFFF"}}/> */}
+                       
+                    </View>
                     
-                <View style={styles.submitContainer}>
-                    <Button TouchableComponent={TouchableOpacity} onPress={this.guardarInformacionHandler} title="Guardar" raised={true}/>
+                </View>        
+                <View style={styles.logoContainer}>
+                    <Image style={styles.imageLogo} source={AppImages.logoImageColor} resizeMode="contain"/>
                 </View>
             </View>
         );
     }
 } 
 
+
+
 const styles=StyleSheet.create({
-    buttonContainer:{       
-        flexDirection: "row",
-        justifyContent: "space-between",  
-        width:"95%",
-        marginTop:5,
-        padding:5            
+    subtitleContainer:{     
+        flexDirection:"row", 
+        alignItems:"flex-end", 
+        justifyContent:"center"    
     },
-    switchContainer:{       
-        flexDirection: "row",
-        justifyContent: "space-between",  
-        width:"70%",      
-        marginTop:10
+    contentContainer:{     
+        backgroundColor:"#F2F2F2", 
+        // borderWidth:1,
+        // borderColor:"orange", 
+        width:"100%",
+        height:"80%",
+        alignItems:"center"         
     },
+    logoContainer:{    
+        flexDirection: "row", 
+        alignItems:"center", 
+        justifyContent:"center", 
+        backgroundColor:"#FFFFFF", 
+        width:"100%",
+        height:"20%"
+    },
+    componentContainer:{    
+        flexDirection: "column", 
+        alignItems:"center", 
+        justifyContent:"flex-start",
+        // borderWidth:1,
+        // borderColor:"red", 
+        height:"65%",
+        width:"100%",
+        marginTop:5        
+    },
+    itemsContainer:{    
+        flexDirection: "column", 
+        alignItems:"center",
+        // borderWidth:1,
+        // borderColor:"green", 
+        padding:15, 
+        width:"43%",  
+        height:"80%",
+        borderRadius: 15  
+
+    },    
+    viewContainer:{    
+        height:"100%",
+        width:"100%",   
+        alignItems:"center" 
+    },  
+
+    imageStyleContainer:{  
+        flex:1,          
+        // borderWidth:1,
+        // borderColor:"blue", 
+        width:"100%",
+        height:"50%"
+    },
+
+    imageStyle:{    
+        // borderWidth:1,
+        // borderColor:"red", 
+        width: "100%",
+        height: "100%"
+    },
+  
+    itemTextStyle:{               
+        fontSize:12 , 
+        color:"#6F7F89",
+        marginLeft: -5           
+    },
+    subTitleStyle:{     
+        fontFamily:"Roboto",           
+        fontSize:15, 
+        color:"#6F7F89", 
+        marginTop:15          
+    },    
+    titleStyle:{               
+        fontFamily:"Roboto", 
+        fontSize:20 , 
+        color:"#2E8228"                   
+    },   
     container: {
-        padding: 26,
-        backgroundColor: "#F1F3F0",
-        alignItems: "center", 
         width:"100%",
         height:"100%"             
-    }, 
-    inputTextStyle:{       
-        fontSize:21   
-    }, 
-    accounterLabelStyle:{       
-        marginTop:20   
-    }, 
-    switchStyle:{       
-        transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]
-    }, 
-    submitContainer:{       
-        marginTop:30,
-        width:"90%"     
-    }
-    
-
+    },
+    imageLogo: {
+        width: "60%",
+        height: "60%",
+        // borderWidth:1,
+        // borderColor:"red", 
+    },
+    titleContainerStyle:{               
+        alignItems:"center",
+        marginTop:30        
+    },
+     
+    buttonStyle: {
+        flex:1,
+        flexDirection:"row"
+    },
+    checkContainerStyle:{
+        backgroundColor: 'transparent',         
+        borderColor:"transparent",
+        height:45, 
+        padding:0,
+        // borderWidth:1,
+        // borderColor:"red"          
+      }, 
+      rememberText:{
+        fontSize:13, 
+        fontFamily: "Roboto-Bold",
+        color:'#A8A8A8',
+        marginLeft:-10           
+      },
+      checkContainer:{
+        width:"90%",
+        // borderWidth:1,
+        // borderColor:"red", 
+        alignItems:"flex-start", 
+        padding:0        
+      },      
+      checkInnerContainer:{
+        width:"50%",
+        padding:0,
+        // borderWidth:1,
+        // borderColor:"blue", 
+        alignItems:"flex-start",    
+      }
 });
+                 
+const mapStateToProps =(state)=>{
+    return {
+        tipoCliente:state.contribuyentes.tempCliente.clientType                
+    }
+}
 
+const mapDispatchToProps =(dispatch)=>{
+    return {
+        // setTempContribData:(client) => dispatch({type : 'SET_CLIENT_DATA', clientData: client})
+        setTempContribData:(client) => dispatch(setClientData(client))
+    }
+}
 
-
-export default ContribuyentesAddScreen;
+export default connect(mapStateToProps,mapDispatchToProps)(ContribuyentesAddScreen);

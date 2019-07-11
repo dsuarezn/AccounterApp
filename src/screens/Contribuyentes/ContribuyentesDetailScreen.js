@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import AccounterUserCard from '../../components/UI/AccounterUserCard/AccounterUserCard';
-import AccounterLabel from '../../components/UI/AccounterLabel/AccounterLabel';
-import VencimientoContribSectionList from '../../components/UI/VencimientoContribSectionList/VencimientoContribSectionList';
-import {iconsMap} from '../../components/UI/Icons/AppIcons';
 import { Navigation } from 'react-native-navigation';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 
+import {bindComponentNavigation} from '../../navigation/Navigation';
 
 const vencimientos = [
     { key:"01", title: "Enero 2019", data: [{itemDesc:"Seguridad Social", value:"11"}, {itemDesc:"Retención en la fuente", value:"24"}, {itemDesc:"Iva Bimestral", value:"24"}] },
@@ -14,15 +11,14 @@ const vencimientos = [
   ];
 
 
-class ContribuyentesDetailScreen extends Component{
+import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
+
+class ContribuyentesDetailScreen extends CommonScreenComponent{
     
     constructor(props){
-        super(props);   
-        Navigation.events().bindComponent(this);     
+        super(props);                    
     }
     navigationButtonPressed({ buttonId }) {
-        console.log(buttonId+" pressed");
-
         if(buttonId==='leftMenu'){
             Navigation.dismissModal(this.props.componentId);
         }
@@ -34,11 +30,9 @@ class ContribuyentesDetailScreen extends Component{
 
     render(){
         return(
-            <View>
-                <AccounterUserCard showCardButton={true} onButtonPressHandler={this.editButtonHandler}></AccounterUserCard>   
-                <AccounterLabel>Vencimientos</AccounterLabel>           
+            <View>                         
                 <ScrollView>
-                    <VencimientoContribSectionList dataArray={vencimientos}></VencimientoContribSectionList>                              
+                                                
                 </ScrollView>
                 
             </View>

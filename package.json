@@ -15,12 +15,23 @@
     "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-native": "^0.59.2",
+    "react-native-calendars": "^1.187.0",
     "react-native-elements": "^1.1.0",
+    "react-native-gesture-handler": "^1.2.1",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-navigation": "^2.16.0",
+    "react-native-popup-dialog": "^0.18.2",
+    "react-native-popup-menu": "^0.15.6",
+    "react-native-reanimated": "^1.0.1",
+    "react-native-scrollable-tab-view": "^0.10.0",
+    "react-native-tab-view": "^2.3.0",
+    "react-native-touchable-scale": "^2.0.0",
     "react-native-vector-icons": "^6.4.2",
+    "react-native-video": "^4.4.1",
     "react-redux": "^6.0.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -34,5 +45,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts"
+    ]
   }
 }

@@ -5,4 +5,4 @@ export
     pushInitalLoginScreen,    
     pushInitalTabbedScreen 
 
-} from './Nav';
+} from './Navigation';
