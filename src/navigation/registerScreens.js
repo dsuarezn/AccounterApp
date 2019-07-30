@@ -4,19 +4,19 @@ import { Navigation } from 'react-native-navigation';
 
 import {
   LoginScreen, 
-  ContribuyentesScreen, 
-  ContribuyentesDetailScreen, 
-  ContribuyentesAddScreen, 
+  ClientesScreen,   
+  ClientesAddScreen, 
   VencimientosScreen, 
   IndicadoresScreen,
   PerfilScreen,
-  NotificacionesScreen, 
+  NovedadesScreen, 
   SplashScreen, 
   LeftMenuScreen, 
   RegistroScreen, 
-  ContribuyentesAddType,
-  ContribuyentesAddDetailScreen, 
-  CalendarScreen
+  ClientesSelectType,
+  ClientesEditDetailScreen, 
+  CalendarScreen,
+  WizardScreen
 } from '../screens';
 
 import { PersistGate } from 'redux-persist/lib/integration/react';
@@ -34,11 +34,8 @@ const appStore= store;
 import {
   SPLASH_SCREEN,
   LOGIN_SCREEN,
-  CONTRIBUYENTES_TAB_SCREEN,
-  CONTRIBUYENTES_DETAIL_SCREEN,
-  CONTRIBUYENTES_ADD_SCREEN,
-  CONTRIBUYENTES_ADDTYPE_SCREEN,
-  CONTRIBUYENTES_ADD_DETAIL_SCREEN,
+  CLIENTES_TAB_SCREEN,    
+  CLIENTES_SELECT_TYPE_SCREEN,  
   VENCIMIENTOS_TAB_SCREEN,
   INDICADORES_TAB_SCREEN,
   PERFIL_TAB_SCREEN, 
@@ -46,7 +43,10 @@ import {
   LEFTMENU_SCREEN, 
   //SEARCH_BAR_COMPONENT, 
   REGISTER_SCREEN,
-  CALENDAR_TAB_SCREEN
+  CALENDAR_TAB_SCREEN,
+  CLIENTES_EDIT_DETAIL_SCREEN,
+  CLIENTES_ADD_SCREEN, 
+  WIZARD_SCREEN
 } from './Screens';
 
 
@@ -70,21 +70,26 @@ function WrappedComponent(Component) {
     Navigation.registerComponent(SPLASH_SCREEN, () => WrappedComponent(SplashScreen));
     Navigation.registerComponent(LOGIN_SCREEN, () => WrappedComponent(LoginScreen));
 
-    Navigation.registerComponent(CONTRIBUYENTES_ADDTYPE_SCREEN, () => WrappedComponent(ContribuyentesAddType));    
-    Navigation.registerComponent(CONTRIBUYENTES_ADD_DETAIL_SCREEN, () => WrappedComponent(ContribuyentesAddDetailScreen));         
-    Navigation.registerComponent(CONTRIBUYENTES_TAB_SCREEN, () => WrappedComponent(ContribuyentesScreen));
-    Navigation.registerComponent(CONTRIBUYENTES_DETAIL_SCREEN, () => WrappedComponent(ContribuyentesDetailScreen));
-    Navigation.registerComponent(CONTRIBUYENTES_ADD_SCREEN, () => WrappedComponent(ContribuyentesAddScreen));
+    Navigation.registerComponent(CLIENTES_SELECT_TYPE_SCREEN, () => WrappedComponent(ClientesSelectType));    
+    
+    Navigation.registerComponent(CLIENTES_EDIT_DETAIL_SCREEN, () => WrappedComponent(ClientesEditDetailScreen));        
+    
+    Navigation.registerComponent(CLIENTES_TAB_SCREEN, () => WrappedComponent(ClientesScreen));    
+    Navigation.registerComponent(CLIENTES_ADD_SCREEN, () => WrappedComponent(ClientesAddScreen));
     
     Navigation.registerComponent(VENCIMIENTOS_TAB_SCREEN, () => WrappedComponent(VencimientosScreen));
     Navigation.registerComponent(INDICADORES_TAB_SCREEN, () => WrappedComponent(IndicadoresScreen));
     Navigation.registerComponent(PERFIL_TAB_SCREEN, () => WrappedComponent(PerfilScreen));    
-    Navigation.registerComponent(NOTIFICACIONES_TAB_SCREEN, () => WrappedComponent(NotificacionesScreen)); 
+    Navigation.registerComponent(NOTIFICACIONES_TAB_SCREEN, () => WrappedComponent(NovedadesScreen)); 
     Navigation.registerComponent(LEFTMENU_SCREEN, () => WrappedComponent(LeftMenuScreen));  
-    //Navigation.registerComponent(SEARCH_BAR_COMPONENT, () => WrappedComponent(SearchBarComponent));    
-    Navigation.registerComponent(REGISTER_SCREEN, () => WrappedComponent(RegistroScreen));  
     
+    Navigation.registerComponent(REGISTER_SCREEN, () => WrappedComponent(RegistroScreen));  
     Navigation.registerComponent(CALENDAR_TAB_SCREEN, () => WrappedComponent(CalendarScreen));  
+    Navigation.registerComponent(VENCIMIENTOS_TAB_SCREEN, () => WrappedComponent(VencimientosScreen));
+
+    Navigation.registerComponent(WIZARD_SCREEN, () => WrappedComponent(WizardScreen)); 
+
+    
     
     console.info('All screens have been registered...');
   }

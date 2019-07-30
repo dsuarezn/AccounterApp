@@ -6,7 +6,7 @@ import {AppImages} from '../../components/UI/Images/AppImages';
 import {pushInitalTabbedScreen, pushToUserRegister} from '../../navigation/Navigation';
 import { CheckBox, Button, Divider } from 'react-native-elements';
 
-import { setAuthData } from '../../store/actions/actions';
+import { setAuthData, setSessionAuthData, setProfileData } from '../../store/actions/actions';
 import Video from 'react-native-video';
 import { connect } from 'react-redux';
 import { environment } from "../../environment/environment";
@@ -16,18 +16,21 @@ import { environment } from "../../environment/environment";
 class LoginScreen extends Component{
    
     state = {        
-        checked:false, 
-        nombre:null, 
+        checked:true, 
+        correo:null, 
         password:null
     };
 
     authData =null;
 
-    loginApi(){
-      
-      var nombre=this.state.nombre;
+    loginApi(){      
+      var correo=this.state.correo;
       var password=this.state.password;
+      var checked=this.state.checked;
       let authDataFunction = this.props.setAuthenticationData;
+      let authSesionDataFunction = this.props.setSessionAuthData;
+      let updateProfileFunction = this.updateProfileData;     
+      let setProfileFunction = this.props.setDatosPerfil;   
       fetch(environment.apiUrl+'/login', {
         method: 'POST',
         headers: {
@@ -35,17 +38,20 @@ class LoginScreen extends Component{
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          nombreUsuario: nombre,
+          correoElectronico: correo,
           password: password,
         }),
       })         
       .then(function(response) {
         if(response.ok) {
           response.json().then((item) =>{ 
-            if(this.state.checked){
+            if(checked){              
               authDataFunction(item);
-            }                                  
-            pushInitalTabbedScreen();
+              //pushInitalTabbedScreen();
+              updateProfileFunction(item.uuid, item.taccmobile, setProfileFunction);
+            }     
+            //authSesionDataFunction(item);
+            //pushInitalTabbedScreen();
           })
         } else {
           response.json().then((item) =>{            
@@ -60,10 +66,42 @@ class LoginScreen extends Component{
     }
 
 
+    updateProfileData(uuid, token, setProfileFunction){                    
+      let guid="/"+uuid;            
+      fetch(environment.apiUrl+'/profile'+guid, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': token
+      }})         
+      .then(function(response) {        
+        if(response.ok) {
+          response.json().then((item) =>{ 
+            setProfileFunction(item);
+            pushInitalTabbedScreen();
+          })
+        } else {
+          response.json().then((item) =>{            
+            console.log(JSON.stringify(item));
+          })
+        }
+      })
+      .catch((error) => {
+        console.log("print on error");
+        console.log(error);    
+      });
+
+    }
+
+
     loginHandler = () => {
+      
       try {           
-        this.loginApi();           
+        this.loginApi();   
+        //pushInitalTabbedScreen();        
       } catch (error) {
+        console.log("error de catchs");
         console.log(error);
       }    
     }
@@ -97,7 +135,7 @@ class LoginScreen extends Component{
                     <Text  style={styles.titleLabel}>
                             Inicia sesión:
                     </Text>
-                    <AccounterInput placeholder="nombre@ejemplo.com" value={this.state.nombre} onChangeText={(value) => this.setState({nombre:value})}/>                            
+                    <AccounterInput placeholder="nombre@ejemplo.com" value={this.state.correo} onChangeText={(value) => this.setState({correo:value})}/>                            
                     <AccounterInput textContentType={'password'} secureTextEntry={true} placeholder="Contraseña" value={this.state.password} onChangeText={(value) => this.setState({password:value})}/> 
                     <AccounterButton onPress={this.loginHandler}>Ingresar</AccounterButton>
 
@@ -271,7 +309,9 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
   return {      
-      setAuthenticationData:(authdata) => dispatch(setAuthData(authdata))
+      setAuthenticationData:(authdata) => dispatch(setAuthData(authdata)),
+      setSessionAuthData:(authdata) => dispatch(setSessionAuthData(authdata)),
+      setDatosPerfil:(profiledata) => dispatch(setProfileData(profiledata))         
   }
 }
 

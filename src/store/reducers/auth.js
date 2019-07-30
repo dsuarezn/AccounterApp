@@ -1,6 +1,8 @@
 import {
     SET_AUTH_DATA,
-    REMOVE_AUTH_DATA
+    REMOVE_AUTH_DATA,
+    SET_SESSION_AUTH_DATA,
+    SET_PROFILE_DATA
 } from '../actions/actionTypes';
 
 
@@ -10,11 +12,23 @@ import {
 const initialAuthState = {
     firstapicall:false, //la primera ves que llama al api para buscar cambios descarga todos los cambios
     securityData:{
-        userName:null,
-        tokenInfo:null,
-        userGrants:null
+        taccmobile:null,
+        uuid:null,                    
+        uuidg:null
     },
-    datosPerfil:[],
+    tempSecurityData:{
+        taccmobile:null,
+        uuid:null,                    
+        uuidg:null
+    },
+    profileData:{
+        ciudad: null,
+        correoElectronico: null, 
+        noIdentificacion: null,
+        nombreUsuario: null,
+        password: null,
+        telefono: null
+    },
     thisversion : 1.0,
     currentVersion : 1.0
 }
@@ -33,11 +47,21 @@ const authReducer = (state = initialAuthState, action) => {
                 ...state,                 
                 securityData:{
                     ...state.securityData,
-                    userName:null,
-                    tokenInfo:null,
-                    userGrants:null
+                    taccmobile:null,
+                    uuid:null,                    
+                    uuidg:null
                 }                          
-            }    
+            } 
+        case  SET_SESSION_AUTH_DATA:        
+            return {
+                ...state,
+                tempSecurityData:action.authData               
+            }
+        case  SET_PROFILE_DATA:        
+            return {
+                ...state,
+                profileData:action.profileData               
+            }   
         default:
             return state;
     }

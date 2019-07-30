@@ -2,15 +2,18 @@ import {
     SET_CLIENT_VENC,
     SET_CLIENT_TYPE,
     SET_CLIENT_DATA,
-    ADD_CONTRIBUYENTE,
+    ADD_CLIENTE,
     ADD_VENCIMIENTO,
     SET_AUTH_DATA,
     REMOVE_AUTH_DATA,
-    REG_NEW_USER,
-    ADD_VENCIMIENTO_PERS,
-    REMOVE_CONTRIBUYENTE,
-    REMOVE_VENCIMIENTO,
-    REMOVE_VENCIMIENTO_PERS 
+    SET_PROFILE_DATA,    
+    SET_SESSION_AUTH_DATA,
+    SET_INDICADORES_DATA,
+    SET_NOVEDADES_DATA,
+    SET_EDIT_MODE,
+    SELECT_CLIENTE,
+    REMOVE_CLIENTE,
+    UPDATE_CLIENTE
 } from './actionTypes';
 
 export const setClientData = (clientinfo) => {
@@ -25,10 +28,23 @@ export const setClientType = (clientType) => {
         clientType: clientType
     }
 };
-export const addContribuyente = (Contribuyente) => {
+export const setEditionMode = (mode) => {
     return {
-        type:ADD_CONTRIBUYENTE, 
+        type:SET_EDIT_MODE, 
+        editMode: mode
+    }
+};
+export const addCliente = (Contribuyente) => {
+    return {
+        type:ADD_CLIENTE, 
         contribuyente: Contribuyente
+    }
+};
+
+export const updateCliente = (datosCliente) => {
+    return {
+        type:UPDATE_CLIENTE, 
+        cliente: datosCliente
     }
 };
 
@@ -45,38 +61,43 @@ export const removeAuthData = () => {
     }
 };
 
-export const registerUserData = (usuario) => {
+export const setProfileData = (datosPerfil) => {
     return {
-        type:REG_NEW_USER, 
-        user: usuario
+        type:SET_PROFILE_DATA, 
+        profileData: datosPerfil
+    }
+};
+
+export const setIndicadoresData = (datos) => {
+    return {
+        type:SET_INDICADORES_DATA, 
+        indicadoresData: datos
+    }
+};
+
+export const setNovedadesData = (datos) => {
+    return {
+        type:SET_NOVEDADES_DATA, 
+        novedadesData: datos
+    }
+};
+
+export const selectClient = (client) => {
+    return {
+        type:SELECT_CLIENTE, 
+        contribuyente: client
+    }
+};
+export const removeClient = (uuid) => {
+    return {
+        type:REMOVE_CLIENTE, 
+        uid: uuid
     }
 };
 
 
 
-export const setClientVenc = (listaVenc) => {
-    return {
-        type:SET_CLIENT_VENC, 
-        listaVencimientos: listaVenc
-    }
-};
-export const removeContribuyente = (contribuyente) => {
-    return {
-        type:ADD_CONTRIBUYENTE, 
-        contribuyente: contribuyente
-    }
-};
-export const addVencimiento = (datosvencimiento) => {
-    return {
-        type:ADD_VENCIMIENTO, 
-        contrib_key: datosvencimiento.contrib_key,
-        vencimiento_key: datosvencimiento.vencimiento_key
-    }
-};
-export const removeVencimiento = (datosvencimiento) => {
-    return {
-        type:ADD_CONTRIBUYENTE, 
-        contrib_key: datosvencimiento.contrib_key,
-        vencimiento_key: datosvencimiento.vencimiento_key
-    }
-};
+
+
+
+

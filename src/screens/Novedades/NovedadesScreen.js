@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
 
-class NotificacionesScreen extends CommonScreenComponent{
+class NovedadesScreen extends CommonScreenComponent{
     
     constructor(props){
         super(props);
@@ -42,4 +42,4 @@ const mapDispatchToProps =(dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(NotificacionesScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(NovedadesScreen);

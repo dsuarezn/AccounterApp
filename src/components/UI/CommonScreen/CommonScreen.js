@@ -10,8 +10,7 @@ export default class CommonScreenComponent extends Component{
     }
 
 
-    navigationButtonPressed({ buttonId }) {  
-        console.log("entro por commons");      
+    navigationButtonPressed({ buttonId }) {             
         if(buttonId==='leftMenu'){
             Navigation.mergeOptions('leftMenuDrawer', {
                 sideMenu: {
@@ -21,6 +20,9 @@ export default class CommonScreenComponent extends Component{
                 }
 
             });
+        }
+        if(buttonId==='return'){
+            Navigation.dismissAllModals();
         }
         if(buttonId==='plusMenu'){
              this.agregarContribuyente();

@@ -7,9 +7,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class ClienteSearchBar extends Component{
     
-state={
-    seachFunction:false
-};
+        state={
+            seachFunction:false, 
+            
+        };
 
 
         constructor(props){
@@ -18,10 +19,17 @@ state={
 
         hideSearchInputHandler = () => {
             this.setState({seachFunction:false});
+            this.setFilterWord(null);
         }
 
         showSearchInputHandler = () => {
             this.setState({seachFunction:true});
+        }
+
+        setFilterWord = (value) => {
+            console.log("se establece el valor:"+value);
+            this.setState({filterWord:value});
+            this.props.onChangeFilterText(value);
         }
         
         render(){
@@ -49,7 +57,7 @@ state={
                          ?                        
                             <Text style={styles.labelStyle}>Agregar Cliente Natural o Jurídico</Text>                                            
                         :                        
-                            <TextInput style={styles.input} placeholder="Nombre o identificación"></TextInput>
+                            <TextInput onChangeText={(value) => this.setFilterWord(value)} style={styles.input} placeholder="Nombre o identificación"></TextInput>
                      }
                      </View>
                      

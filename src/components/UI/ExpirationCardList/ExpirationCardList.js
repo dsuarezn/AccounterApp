@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import {View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, FlatList, ScrollView} from 'react-native';
-import { ListItem } from 'react-native-elements';
-import {iconsMap} from '../Icons/AppIcons';
 import AccounterExpirationCard from '../AccounterExpiracionCard/AccounterExpirationCard';
 
 

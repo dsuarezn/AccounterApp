@@ -1,5 +1,5 @@
 import {
-    LOAD_NOTIFICACIONES
+    SET_NOVEDADES_DATA
 } from '../actions/actionTypes';
 
 
@@ -13,15 +13,11 @@ const notificacionesInitialState = {
 
 const notificacionesReducer = (state = notificacionesInitialState, action) => {
     switch(action.type){
-        case  LOAD_NOTIFICACIONES:        
+        case  SET_NOVEDADES_DATA:        
             return {
                 ...state,
-                tempCliente:{
-                    ...state.tempCliente,
-                    clientType:action.clientType
-                }
-            }
-      
+                notificaciones:action.novedadesData
+            }      
         default:
             return state;
     }

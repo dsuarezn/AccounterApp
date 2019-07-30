@@ -14,8 +14,7 @@ class AccounterInput extends Component{
         
         render(){
            
-            return(
-                <View style = {[styles.wrapper, this.props.style]}>
+            return(                
                      <TextInput 
                         placeholder={this.props.placeholder}
                         underlineColorAndroid={'transparent'} 
@@ -23,8 +22,7 @@ class AccounterInput extends Component{
                         secureTextEntry={this.props.secureTextEntry}
                         textContentType={this.props.textContentType}
                         style = {[styles.input, this.props.style]}
-                        value={this.props.value} onChangeText={this.props.onChangeText}/> 
-                </View>
+                        value={this.props.value} onChangeText={this.props.onChangeText}/>                 
             );        
         }
     
@@ -47,23 +45,35 @@ const styles = StyleSheet.create({
         height:38,    
         borderWidth: 1,
         borderColor: "#D8D8D8",
-        padding: 12,        
+        paddingLeft:10,
+        paddingRight:10,
+        paddingTop:0,
+        paddingBottom:0,
         backgroundColor: "#fefefe",
         color:'#A8A8A8',
-        fontFamily: 'Roboto'       
-    },
-    wrapper: {
+        fontFamily: 'Roboto',
+        
         flexDirection: "row",
         justifyContent: "center",
         borderRadius: 5,
         backgroundColor : "#FFFFFF",
         width: "90%",         
         borderColor:"#D8D8D8",
-        borderWidth: 1, 
+        borderWidth: 2, 
         marginBottom:5,
-        marginTop:5
-        
+        marginTop:5      
     }
+    // ,wrapper: {
+    //     flexDirection: "row",
+    //     justifyContent: "center",
+    //     borderRadius: 5,
+    //     backgroundColor : "#FFFFFF",
+    //     width: "90%",         
+    //     borderColor:"#D8D8D8",
+    //     borderWidth: 1, 
+    //     marginBottom:5,
+    //     marginTop:5        
+    // }
 });
 
 

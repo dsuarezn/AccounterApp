@@ -2,8 +2,11 @@ import {
     SET_CLIENT_DATA,
     SET_CLIENT_TYPE,           
     SET_CLIENT_VENCIMIENTOS, 
-    ADD_CONTRIBUYENTE,
-    REMOVE_CONTRIBUYENTE
+    ADD_CLIENTE,
+    REMOVE_CLIENTE,
+    SELECT_CLIENTE,
+    SET_EDIT_MODE,
+    UPDATE_CLIENTE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -14,9 +17,12 @@ const initialState = {
         ciudad:'',
         nit:'', 
         granContribuyente:'',
-        vencimientos:[]
-    },               
-    contribuyentes : []
+        vencimientos:[], 
+        uuid:null
+    }, 
+    editMode:false,              
+    contribuyentes : [],
+    contribuyenteSeleccionado:null
 }
 
 const contribuyenteReducer = (state = initialState, action) => {
@@ -29,6 +35,11 @@ const contribuyenteReducer = (state = initialState, action) => {
                     clientType:action.clientType
                 }
             }
+        case  SET_EDIT_MODE:        
+            return {
+                ...state,
+                editMode:action.editMode
+            }            
         case  SET_CLIENT_DATA:
             return {
                 ...state,
@@ -40,7 +51,20 @@ const contribuyenteReducer = (state = initialState, action) => {
                     nit:action.clientData.nit,
                     granContribuyente:action.clientData.granContribuyente
                 }
-            }                        
+            } 
+        case  UPDATE_CLIENTE:               
+                return {
+                    ...state,
+                    contribuyentes: state.contribuyentes.map(data => {                                                
+                        if(data.uuid === action.cliente.uuid) {                          
+                          return action.cliente;
+                        }
+                        else{
+                            return item;
+                        }                        
+                      })
+                    }
+                                       
         case  SET_CLIENT_VENCIMIENTOS:
                 return {
                     ...state,
@@ -49,19 +73,27 @@ const contribuyenteReducer = (state = initialState, action) => {
                         vencimientos:action.listaVencimientos                        
                     }
                 }
-        case  ADD_CONTRIBUYENTE:
+        case  ADD_CLIENTE:
             return {
                 ...state,
                 contribuyentes:state.contribuyentes.concat(action.contribuyente)
             }
-        case  REMOVE_CONTRIBUYENTE:
+        case  REMOVE_CLIENTE:
             return {
                 ...state,
                 contribuyentes:state.contribuyentes.filter(contrib=>{
-                    return contrib.key !== action.contribuyente.key
+                    return contrib.uuid !== action.uid
                 })
             }
+        case  SELECT_CLIENTE:
+            return {
+                ...state,
+                contribuyenteSeleccionado:action.contribuyente
+            }
+            
    
+
+            
         default:
             return state;
     }

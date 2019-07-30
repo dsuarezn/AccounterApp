@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
 import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
 import {AppImages} from '../../components/UI/Images/AppImages';
-import { CONTRIBUYENTES_ADD_SCREEN } from '../../navigation/Screens';
-import {iconsMap} from '../../components/UI/Icons/AppIcons';
-import { setClientType } from '../../store/actions/actions';
+import { setClientType,setEditionMode, selectClient } from '../../store/actions/actions';
 
 import { connect } from 'react-redux';
 
-import {irACreacionCliente, bindComponentNavigation} from '../../navigation/Navigation';
+import {agregarContribuyente} from '../../navigation/Navigation';
 
 
 import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
 
-class ContribuyentesAddType extends CommonScreenComponent{
+class ClientesSelectType extends CommonScreenComponent{
     state = {
         selectedClientType : ''
     };
@@ -30,16 +28,20 @@ class ContribuyentesAddType extends CommonScreenComponent{
 
     agregarClienteNaturalHandler = () => {        
         let clientType="Natural";
-        this.props.setTempContribType(clientType);        
-        irACreacionCliente();
+        this.props.setTempContribType(clientType); 
+        this.props.setEditMode("add");  
+        this.props.selectClient(null);             
+        agregarContribuyente("add");  
     }
 
 
 
     agregarClienteJuridicoHandler = () => {        
         let clientType="Juridico";
-        this.props.setTempContribType(clientType);        
-        irACreacionCliente();
+        this.props.setTempContribType(clientType);
+        this.props.setEditMode("add");    
+        this.props.selectClient(null);    
+        agregarContribuyente("add");  
     }
 
 
@@ -134,7 +136,7 @@ const styles=StyleSheet.create({
         padding:15, 
         width:"43%",  
         height:"80%",
-        borderRadius: 15  
+        borderRadius: 7  
 
     },    
     viewContainer:{    
@@ -195,7 +197,10 @@ const styles=StyleSheet.create({
 const mapDispatchToProps =(dispatch)=>{
     return {
         // setTempContribType:(type) => dispatch({type : 'SET_CLIENT_TYPE', clientType: type})
-        setTempContribType:(type) => dispatch(setClientType(type))
+        setTempContribType:(type) => dispatch(setClientType(type)),
+        setEditMode:(mode) => dispatch(setEditionMode(mode)),
+        selectClient:(client) => dispatch(selectClient(client))
+        
     }
 }
 
@@ -205,4 +210,4 @@ const mapStateToProps =(state)=>{
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(ContribuyentesAddType);
+export default connect(mapStateToProps, mapDispatchToProps)(ClientesSelectType);

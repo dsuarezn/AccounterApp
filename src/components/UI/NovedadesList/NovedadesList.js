@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, TouchableHighlight ,FlatList, Platform} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, TouchableHighlight ,FlatList, Platform, ActivityIndicator} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
@@ -8,58 +8,57 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 class NovedadesList extends Component{
 
 
-    _menu = null;
-
-    setMenuRef = ref => {
-      this._menu = ref;
-    };
-  
-    hideMenu = () => {
-      this._menu.hide();
-    };
-  
-    showMenu = () => {
-      this._menu.show();
-    };
-
-
     onOptionSelect(value) {
              
     }
 
     constructor(props){
         super(props);        
-    }    
+    }   
+    
+    
     
     render () {
-      return (
 
+        
+
+      return (
         <View style={styles.flatListContainer}>
             
-            <FlatList                
+            <FlatList             
+                keyExtractor={(item, index) => index.toString()}   
                 data={this.props.dataArray} renderItem={
                 ({item}) =>                
                     
                         <View /*onPress={this.props.onPressHandler}*/ style={styles.parentItemListContainer}>
                             <View style={styles.titleContainer}>
                                 <View style={styles.innerContainer}>
-                                    <Text style={styles.titleStyle}>{item.title}</Text>
+                                    <Text style={styles.titleStyle}>{item.tituloNotf}</Text>
                                     <Icon name="share" size={20} color="#4DA72C" />
                                 </View>                                                                                                                   
                             </View>
                             {
-                                item.media==='video'
+                                item.tipoRecursoMultimedia==='imagen' && item.recursoMultimedia!==null && item.rutaRecMultimedia!==null
+                                ?                                
+                                    <View style={styles.mediaContainer}>
+                                        <Image style={styles.image} source={{uri: item.recursoMultimedia}} resizeMode="stretch"></Image>                                                                           
+                                    </View>
+                                :                                 
+                                null                               
+                            }  
+                            {
+                                item.tipoRecursoMultimedia==='imagen' && item.recursoMultimedia===null
                                 ?
-                                <View style={styles.mediaContainer}>
-                                    <Image style={styles.image} source={require('../../../assets/images/novedades/novedad.png')} resizeMode="stretch"></Image>                                            
+                                <View style={styles.emptyContainer}>
+                                    <ActivityIndicator size="large" color="#7C7C7C" />                                                                                                             
                                 </View>
                                 :
-                                null                                
-                            }                            
+                                null
+                            }
                             <View style={styles.textContainer}>
                                 <View style={styles.innerContainer}>
                                     <Text style={styles.listItemTextOwner}>
-                                        {item.textDesc}                
+                                        {item.descNotificacion}                
                                     </Text>  
                                 </View>                                            
                             </View>
@@ -105,7 +104,17 @@ const styles=StyleSheet.create({
         fontSize:15     
     },
     mediaContainer:{
-               
+        width: Dimensions.get('window').width * 1,
+        height: Dimensions.get('window').height * 0.35, 
+        backgroundColor: "#E5E6E7"     
+    },
+    emptyContainer:{
+        width: Dimensions.get('window').width * 1,
+        height: Dimensions.get('window').height * 0.35, 
+        backgroundColor: "#E5E6E7",
+        flexDirection: "row",
+        alignContent:"center",
+        justifyContent:"center"     
     },
     textContainer:{           
         // borderWidth: 1,

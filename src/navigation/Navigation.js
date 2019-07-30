@@ -11,16 +11,16 @@ var whatsApp;
 
 import {
   SPLASH_SCREEN,
-  LOGIN_SCREEN, 
-  CONTRIBUYENTES_TAB_SCREEN,
-  VENCIMIENTOS_TAB_SCREEN,
+  LOGIN_SCREEN,   
+  CLIENTES_TAB_SCREEN,  
   INDICADORES_TAB_SCREEN,  
   NOTIFICACIONES_TAB_SCREEN, 
   LEFTMENU_SCREEN, 
-  REGISTER_SCREEN,
-  CALENDAR_TAB_SCREEN,
-  CONTRIBUYENTES_ADDTYPE_SCREEN,
-  CONTRIBUYENTES_DETAIL_SCREEN
+  REGISTER_SCREEN,  
+  CLIENTES_ADD_SCREEN,  
+  PERFIL_TAB_SCREEN,
+  CLIENTES_EDIT_DETAIL_SCREEN,
+  CLIENTES_SELECT_TYPE_SCREEN
 } from './Screens';
 
 import registerScreens from './registerScreens';
@@ -33,6 +33,7 @@ function loadIcons() {
 }
 
 export function pushInitalTabbedScreen() {  
+
   generalTabConfigNavigation();
   navegacionPorTabs();
 }
@@ -247,7 +248,7 @@ export function navegacionPorTabs() {
               stack: {
                 children: [{
                   component: {
-                    name: CONTRIBUYENTES_TAB_SCREEN,
+                    name: CLIENTES_TAB_SCREEN,
                     options: {
                       topBar: {
                         title: {
@@ -270,56 +271,55 @@ export function navegacionPorTabs() {
                 }
               }
             },
-            {
-              stack: {
-                children: [{
-                  component: {
-                    name: VENCIMIENTOS_TAB_SCREEN,
-                    options: {
-                      topBar: {
-                        title: {
-                          text: 'Vencimientos',
-                          color: '#FFFFFF'
-                        }
-                      }
-                    }
-                  }
-                }],
-                options: {
-                  bottomTab: {
-                    icon: iconsMap["notifications-active"],
-                    testID: 'THIRD_TAB_BAR_BUTTON',
-                    text: 'Vencimientos',
-                  }
-                }
-              }
-            }
-            ,
+            // {
+            //   stack: {
+            //     children: [{
+            //       component: {
+            //         name: VENCIMIENTOS_TAB_SCREEN,
+            //         options: {
+            //           topBar: {
+            //             title: {
+            //               text: 'Vencimientos',
+            //               color: '#FFFFFF'
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }],
+            //     options: {
+            //       bottomTab: {
+            //         icon: iconsMap["notifications-active"],
+            //         testID: 'THIRD_TAB_BAR_BUTTON',
+            //         text: 'Vencimientos',
+            //       }
+            //     }
+            //   }
+            // },
 
-            {
-              stack: {
-                children: [{
-                  component: {
-                    name: CALENDAR_TAB_SCREEN,
-                    options: {
-                      topBar: {
-                        title: {
-                          text: 'Calendario',
-                          color: '#FFFFFF'
-                        }
-                      }
-                    }
-                  }
-                }],
-                options: {
-                  bottomTab: {
-                    icon: iconsMap["date-range"],
-                    testID: 'FIFTH_TAB_BAR_BUTTON',
-                    text: 'Calendario',
-                  }
-                }
-              }
-            },
+            // {
+            //   stack: {
+            //     children: [{
+            //       component: {
+            //         name: CALENDAR_TAB_SCREEN,
+            //         options: {
+            //           topBar: {
+            //             title: {
+            //               text: 'Calendario',
+            //               color: '#FFFFFF'
+            //             }
+            //           }
+            //         }
+            //       }
+            //     }],
+            //     options: {
+            //       bottomTab: {
+            //         icon: iconsMap["date-range"],
+            //         testID: 'FIFTH_TAB_BAR_BUTTON',
+            //         text: 'Calendario',
+            //       }
+            //     }
+            //   }
+            // },
 
             {
               stack: {
@@ -379,72 +379,9 @@ export function navegacionPorTabs() {
 
 
 
-export function seleccionarVencimientos(){        
-  Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: CONTRIBUYENTES_ADD_DETAIL_SCREEN,
-            passProps: {
-              text: 'stack with one child'
-            },
-            options: {
-              topBar: {
-                title: {
-                  text: 'Modal'
-                },
-                leftButtons: [
-                  {          
-                    id: 'leftMenu',
-                    icon: iconsMap["menu"],
-                    color: '#FFFFFF'
-                  }
-                ],
-              }
-            }
-          }
-        }]
-      }
-    });
-}
 
 
-export function irACreacionCliente(){        
-  Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: CONTRIBUYENTES_ADD_SCREEN,
-            passProps: {
-              text: 'stack with one child'
-            },
-            options: {
-              topBar: {
-                title: {
-                  text: 'Clientes',
-                  color: '#FFFFFF'
-                },
-                leftButtons: [
-                  {          
-                    id: 'leftMenu',
-                    icon: iconsMap["menu"],
-                    color: '#FFFFFF'
-                  }
-                ],
-                rightButtons: [
-                  {          
-                    id: 'rightMenu',
-                    icon: iconsMap["work"],
-                    color: '#FFFFFF'
-                  }
-                ],
-              }
-            }
-          }
-        }]
-      }
-    });
-}
+
 
 export function bindComponentNavigation(element){
   Navigation.events().bindComponent(element);
@@ -457,7 +394,7 @@ export function editarContribuyente(){
       stack: {
         children: [{
           component: {
-            name: CONTRIBUYENTES_DETAIL_SCREEN,
+            name: CLIENTES_EDIT_DETAIL_SCREEN,
             passProps: {
               text: 'stack with one child'
             },
@@ -489,14 +426,50 @@ export function editarContribuyente(){
     });
 }
 
-export function agregarContribuyente(){        
+
+export function showTipoContribuyente(){        
   Navigation.showModal({
       stack: {
         children: [{
           component: {
-            name: CONTRIBUYENTES_ADDTYPE_SCREEN,
+            name: CLIENTES_SELECT_TYPE_SCREEN,            
+            options: {
+              topBar: {
+                title: {
+                  text: 'Clientes',
+                  color: '#FFFFFF'
+                },
+                leftButtons: [
+                  {          
+                    id: 'leftMenu',
+                    icon: iconsMap["menu"],
+                    color: '#FFFFFF'
+                  }
+                ],
+                rightButtons: [
+                  {          
+                    id: 'rightMenu',
+                    icon: iconsMap["work"],
+                    color: '#FFFFFF'
+                  }
+                ],
+              }
+            }
+          }
+        }]
+      }
+    });
+}
+
+
+export function agregarContribuyente(modoEdicion){        
+  Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: CLIENTES_EDIT_DETAIL_SCREEN,
             passProps: {
-              text: 'stack with one child'
+              edicion: modoEdicion
             },
             options: {
               topBar: {
@@ -526,3 +499,31 @@ export function agregarContribuyente(){
     });
 }
 
+export function verPerfil(){        
+  Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: PERFIL_TAB_SCREEN,
+            passProps: {              
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'Perfil',
+                  color: '#FFFFFF'
+                },
+                leftButtons: [
+                  {          
+                    id: 'return',
+                    icon: iconsMap["arrow-back"],
+                    color: '#FFFFFF'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    });
+}

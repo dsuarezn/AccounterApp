@@ -3,7 +3,6 @@ import { Text, View, TouchableOpacity, StyleSheet, SectionList,Dimensions, Image
 import Icon from 'react-native-vector-icons/Feather';
 import { TabView, SceneMap } from 'react-native-tab-view';
 // import { Icon, Accordion} from "native-base";
-import Animated from 'react-native-reanimated';
 
 
 

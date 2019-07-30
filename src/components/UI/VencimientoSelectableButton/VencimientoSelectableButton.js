@@ -157,10 +157,11 @@ export default class VencimientoSelectableButton extends Component {
   }
 
   
-  changeStateValue = () => {   
-    if(this.props.selectable===true){
-      this.props.onPress(); 
-      this.setState({selected: !this.state.selected});
+  changeStateValue = () => {      
+    if(this.props.selectable===true){        
+      this.setState({selected: !this.state.selected},function() {        
+        this.props.onPressButtonHandler(this.props.code); 
+      });      
     }
   }
 
@@ -227,24 +228,48 @@ export default class VencimientoSelectableButton extends Component {
 
     item = buttonsConstants.filter(element => element.code===codeDefault);
 
-    return (       
-      textModeDefault==='onlyCode' ? 
-      <TouchableOpacity onPress={this.changeStateValue}>
-        <View opacity={itemOpacity} style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
-          <Text style={[styles.mayorTextStyle,{color:item[0].textColor, fontSize:fontRelation*widthDefault, marginTop:marginRelation*widthDefault}]}>{item[0].code}</Text>
-        </View>        
-      </TouchableOpacity>
-      : 
-      <TouchableOpacity onPress={this.changeStateValue}>
-        <View opacity={itemOpacity} style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
-            <View style={styles.codeContainer}>
+    let selectable = this.props.selectable;    
+
+    return (             
+        selectable===true 
+        ? 
+        textModeDefault==='onlyCode' ?       
+          <TouchableOpacity onPress={this.changeStateValue}>
+            <View opacity={itemOpacity} style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
               <Text style={[styles.mayorTextStyle,{color:item[0].textColor, fontSize:fontRelation*widthDefault, marginTop:marginRelation*widthDefault}]}>{item[0].code}</Text>
-            </View>
-            <View style={styles.subtContainer}>
-              <Text style={[styles.minorTextStyle,{color:item[0].textColor, fontSize:fontRelationDesc*widthDefault}]}>{item[0].abbrTitle}</Text>
-            </View>
-        </View>                   
-      </TouchableOpacity>    
+            </View>        
+          </TouchableOpacity>
+          : 
+          <TouchableOpacity onPress={this.changeStateValue}>
+            <View opacity={itemOpacity} style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
+                <View style={styles.codeContainer}>
+                  <Text style={[styles.mayorTextStyle,{color:item[0].textColor, fontSize:fontRelation*widthDefault, marginTop:marginRelation*widthDefault}]}>{item[0].code}</Text>
+                </View>
+                <View style={styles.subtContainer}>
+                  <Text style={[styles.minorTextStyle,{color:item[0].textColor, fontSize:fontRelationDesc*widthDefault}]}>{item[0].abbrTitle}</Text>
+                </View>
+            </View>                   
+          </TouchableOpacity>        
+        :
+        textModeDefault==='onlyCode' ?       
+          <View>
+            <View  style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
+              <Text style={[styles.mayorTextStyle,{color:item[0].textColor, fontSize:fontRelation*widthDefault, marginTop:marginRelation*widthDefault}]}>{item[0].code}</Text>
+            </View>        
+          </View>
+          : 
+          <View>
+            <View  style={[styles.buttonStyle,{backgroundColor:item[0].color, width:widthDefault, height:heightDefault, padding:paddingValue, borderRadius:widthDefault*borderRadiusRelation, margin:buttonMarginRelation*widthDefault}]}>
+                <View style={styles.codeContainer}>
+                  <Text style={[styles.mayorTextStyle,{color:item[0].textColor, fontSize:fontRelation*widthDefault, marginTop:marginRelation*widthDefault}]}>{item[0].code}</Text>
+                </View>
+                <View style={styles.subtContainer}>
+                  <Text style={[styles.minorTextStyle,{color:item[0].textColor, fontSize:fontRelationDesc*widthDefault}]}>{item[0].abbrTitle}</Text>
+                </View>
+            </View>                   
+          </View>
+        
+             
     );
   }
 }

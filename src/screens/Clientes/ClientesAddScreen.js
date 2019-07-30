@@ -9,14 +9,13 @@ import { connect } from 'react-redux';
 import AccounterButton from '../../components/UI/AccounterButton/AccounterButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { CONTRIBUYENTES_ADD_SCREEN, CONTRIBUYENTES_ADD_DETAIL_SCREEN } from '../../navigation/Screens';
 import { setClientData } from '../../store/actions/actions';
 
-import {seleccionarVencimientos, bindComponentNavigation} from '../../navigation/Navigation';
+import {agregarContribuyente} from '../../navigation/Navigation';
 import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";
 
 
-class ContribuyentesAddScreen extends CommonScreenComponent{
+class ClientesAddScreen extends CommonScreenComponent{
     state = {        
         razonSocial:null,
         ciudad:null,
@@ -42,8 +41,8 @@ class ContribuyentesAddScreen extends CommonScreenComponent{
             granContribuyente:this.state.granContribuyente,
             clientType:this.props.tipoCliente
         };
-        this.props.setTempContribData(client);
-        seleccionarVencimientos();        
+        this.props.setTempContribData(client);        
+        agregarContribuyente("add");        
     }
 
     
@@ -262,4 +261,4 @@ const mapDispatchToProps =(dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ContribuyentesAddScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(ClientesAddScreen);

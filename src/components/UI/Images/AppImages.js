@@ -1,6 +1,7 @@
 export const AppImages ={
     logoImage: require('../../../assets/images/accounterLogo.png'),
     logoImageColor: require('../../../assets/images/accounter-logo-color.png'), 
+    logoImageWhite: require('../../../assets/images/accounter-logo-w.png'), 
     userImage: require('../../../assets/images/defaultUser.png'),
 
 

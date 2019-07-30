@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {bindComponentNavigation, pushLoginScreen} from '../../navigation/Navigation';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import { removeAuthData } from '../../store/actions/actions';
 import TouchableScale from 'react-native-touchable-scale';
+import { verPerfil } from "../../navigation/Navigation";
 
 class LeftMenuScreen extends Component{
     constructor(props){
@@ -37,12 +38,12 @@ class LeftMenuScreen extends Component{
                         <Text style={styles.tittleLabelStyle}>Menú</Text>
                     </View>    
                 </View>                
-                <View style={styles.itemContainer}> 
+                <TouchableOpacity onPress={verPerfil} style={styles.itemContainer}> 
                     <View style={styles.itemInnerContainer}>                   
                         <Icon style={styles.iconStyle} name="person" size={32} color="#FFFFFF" />  
                         <Text style={styles.labelStyle}>Perfil</Text>
                     </View>    
-                </View>             
+                </TouchableOpacity>             
                 <View style={{height: 1, width: "95%", backgroundColor: "#CED0CE"}} />
 
                 <View style={styles.itemContainer}>

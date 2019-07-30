@@ -10,7 +10,6 @@ import OctIcon from 'react-native-vector-icons/AntDesign';
 import {bindComponentNavigation} from '../../navigation/Navigation';
 
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { CONTRIBUYENTES_ADD_SCREEN } from '../../navigation/Screens';
 import VencimientoSelectableButton from '../../components/UI/VencimientoSelectableButton/VencimientoSelectableButton';
 
 import CommonScreenComponent from "../../components/UI/CommonScreen/CommonScreen";

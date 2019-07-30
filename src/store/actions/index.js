@@ -1,1 +1,1 @@
-export {setClientData, setClientType, addContribuyente,addVencimiento,removeContribuyente,removeVencimiento} from './actions'
+export {setClientData, setClientType, addCliente,addVencimiento,removeContribuyente,removeVencimiento} from './actions'

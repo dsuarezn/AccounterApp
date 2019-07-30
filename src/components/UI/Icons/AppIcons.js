@@ -15,7 +15,8 @@ const icons = {
   "calendar":[30],
   "work-outline":[30],
   "calendar_today":[30],
-  "calendar-today":[30]
+  "calendar-today":[30],
+  "arrow-back":[30]
 };
 
 

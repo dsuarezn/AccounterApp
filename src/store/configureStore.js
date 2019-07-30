@@ -11,19 +11,32 @@ import notificaciones from './reducers/notificaciones';
 import vencimientos from './reducers/vencimientos';
  
 
+const persistConfig = {
+  key: 'root',
+  storage: storage
+}
+
+const persistConfigContribuyentes = {
+  key: 'contribuyentes',
+  storage: storage,
+  blacklist: ['tempCliente']
+}
+
+const persistConfigAuth = {
+  key: 'auth',
+  storage: storage,
+  blacklist: ['tempSecurityData']
+}
+
 const rootReducer = combineReducers({
-  contribuyentes : contribuyenteReducer, 
-  auth : authReducer,
+  contribuyentes : persistReducer(persistConfigContribuyentes, contribuyenteReducer), 
+  auth : persistReducer(persistConfigAuth, authReducer),
   indicadores : indicadores,
   notificaciones : notificaciones,
   vencimientos : vencimientos
 });
 
-const persistConfig = {
-    key: 'root',
-    storage: storage,
-    blacklist: ['tempCliente']
-  }
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

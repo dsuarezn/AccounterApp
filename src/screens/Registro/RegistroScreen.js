@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import AccounterInput from '../../components/UI/AccounterInput/AccounterInput';
 import AccounterButton from '../../components/UI/AccounterButton/AccounterButton';
 import {AppImages} from '../../components/UI/Images/AppImages';
@@ -8,6 +8,7 @@ import { CheckBox, Button, Divider } from 'react-native-elements';
 import {pushInitalLoginScreen} from '../../navigation/Navigation';
 
 import { environment } from "../../environment/environment";
+
 
 class RegistroScreen extends Component{
 
@@ -26,6 +27,12 @@ class RegistroScreen extends Component{
       if(this.state.terminosCondiciones){
         this.registroApiCall();
       }      
+    }
+
+    irALoginHandler = () => {  
+      pushInitalLoginScreen();
+      
+
     }
 
     constructor(props){
@@ -123,9 +130,11 @@ class RegistroScreen extends Component{
                     <Text style={styles.rememberText}>
                             Si ya tienes cuenta haz clic 
                     </Text>
-                    <Text style={styles.underlinelinkText}>
-                            {' aquí para ingresar'}
-                    </Text>
+                    <TouchableOpacity onPress={this.irALoginHandler} >
+                        <Text style={styles.underlinelinkText}>
+                                {' aquí para ingresar'}
+                        </Text>
+                    </TouchableOpacity>                    
                 </View>                                       
 
                <Image style={styles.image} source={AppImages.logoImage} resizeMode="contain"/>

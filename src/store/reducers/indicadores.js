@@ -1,5 +1,5 @@
 import {
-    LOAD_INDICADORES
+    SET_INDICADORES_DATA
 } from '../actions/actionTypes';
 
 const indicadoresInitialState = {
@@ -10,13 +10,10 @@ const indicadoresInitialState = {
 
 const indicadoresReducer = (state = indicadoresInitialState, action) => {
     switch(action.type){
-        case  LOAD_INDICADORES:        
+        case  SET_INDICADORES_DATA:        
             return {
                 ...state,
-                tempCliente:{
-                    ...state.tempCliente,
-                    clientType:action.clientType
-                }
+                indicadores:action.indicadoresData
             }
        
         default:
